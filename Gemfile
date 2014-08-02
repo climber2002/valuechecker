@@ -28,6 +28,15 @@ gem 'spring',        group: :development
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
+  gem 'factory_girl_rails'
+end
+
+group :test do
+  gem 'faker'
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy', '~> 2.3.0'
+  gem 'selenium-webdriver', '~> 2.39.0'
 end
 
 # Use ActiveModel has_secure_password
