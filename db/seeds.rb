@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Exchange.create!(name: "上交所", abbreviation: "SH", english_name: "Shanghai")
+Exchange.create!(name: "深交所", abbreviation: "SZ", english_name: "Shenzhen")
