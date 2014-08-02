@@ -16,4 +16,5 @@ class Exchange < ActiveRecord::Base
   validates :abbreviation, uniqueness: true, presence: true
   validates :english_name, uniqueness: true, presence: true
 
+  has_many :companies
 end
