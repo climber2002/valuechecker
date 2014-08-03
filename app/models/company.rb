@@ -29,4 +29,8 @@ class Company < ActiveRecord::Base
   def exchange_english_name
     self.exchange.english_name
   end
+
+  def daily_value_on(date)
+    daily_values.by_date(date).first
+  end
 end

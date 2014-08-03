@@ -9,7 +9,7 @@ RSpec.describe Csi::IndexImporter do
     end
     
     it 'should be able to import CSI 300 index' do
-      described_class.import_index("#{Rails.root}/db/xls/000300cons.xls", 
+      described_class.import_index("#{Rails.root}/db/xls/csi/000300cons.xls", 
         { name: '沪深300', english_name: 'CSI 300 Index', code: '000300' })
 
       index = Index.find_by(code: '000300')
