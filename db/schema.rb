@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140803013254) do
+ActiveRecord::Schema.define(version: 20140803050907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,20 @@ ActiveRecord::Schema.define(version: 20140803013254) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "daily_values", force: true do |t|
+    t.integer  "company_id"
+    t.date     "date"
+    t.integer  "total_shares"
+    t.integer  "circulating_shares"
+    t.decimal  "price",              precision: 7, scale: 3
+    t.decimal  "pe_ttm",             precision: 9, scale: 3
+    t.decimal  "pb",                 precision: 9, scale: 3
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "daily_values", ["company_id", "date"], name: "index_daily_values_on_company_id_and_date", unique: true, using: :btree
 
   create_table "exchanges", force: true do |t|
     t.string   "name"

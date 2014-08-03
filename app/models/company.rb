@@ -20,6 +20,8 @@ class Company < ActiveRecord::Base
   belongs_to :exchange
   validates :exchange_id, presence: true
 
+  has_many :daily_values
+
   def exchange_english_name=(exchange_name)
     self.exchange = Exchange.find_by(english_name: exchange_name)
   end
