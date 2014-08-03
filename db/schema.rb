@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140802135113) do
+ActiveRecord::Schema.define(version: 20140803013254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,24 @@ ActiveRecord::Schema.define(version: 20140802135113) do
   create_table "exchanges", force: true do |t|
     t.string   "name"
     t.string   "abbreviation"
+    t.string   "english_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "index_items", force: true do |t|
+    t.integer  "index_id"
+    t.integer  "company_id"
+    t.decimal  "weight",     precision: 5, scale: 3
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "index_items", ["index_id", "company_id"], name: "index_index_items_on_index_id_and_company_id", unique: true, using: :btree
+
+  create_table "indices", force: true do |t|
+    t.string   "code"
+    t.string   "name"
     t.string   "english_name"
     t.datetime "created_at"
     t.datetime "updated_at"

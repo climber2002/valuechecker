@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: companies
+#
+#  id           :integer          not null, primary key
+#  code         :string(255)
+#  name         :string(255)
+#  english_name :string(255)
+#  exchange_id  :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+
 require 'rails_helper'
 
 RSpec.describe Company, :type => :model do
@@ -37,5 +50,15 @@ RSpec.describe Company, :type => :model do
       expect(company2).to_not be_valid
       expect(company2.errors[:english_name].size).to eq 1
     end
+  end
+
+  describe "#exchange_english_name=" do
+    
+    it "should be able to set the exchange by exchange_english_name=" do
+      shenzhen_exchange = FactoryGirl.create(:exchange, english_name: 'Shenzhen')
+      company = FactoryGirl.create(:company, exchange: nil, exchange_english_name: shenzhen_exchange.english_name)
+      expect(company.exchange_english_name).to eq shenzhen_exchange.english_name
+    end
+
   end
 end

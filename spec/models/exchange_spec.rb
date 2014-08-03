@@ -26,17 +26,10 @@ RSpec.describe Exchange, :type => :model do
     end
 
     it "should be invalid if the name already exists" do
-      FactoryGirl.create(:exchange)
-      ex = FactoryGirl.build(:exchange)
-      expect(ex).to_not be_valid
-      expect(ex.errors[:name].size).to eq 1
-    end
-  end
-
-  describe "db:seed" do
-    it "should load seeds data" do
-      expect(Exchange.find_by(abbreviation: 'SH').english_name).to eq 'Shanghai'
-      expect(Exchange.find_by(abbreviation: 'SZ').english_name).to eq 'Shenzhen'
+      ex = FactoryGirl.create(:exchange)
+      ex2 = FactoryGirl.build(:exchange, name: ex.name)
+      expect(ex2).to_not be_valid
+      expect(ex2.errors[:name].size).to eq 1
     end
   end
 

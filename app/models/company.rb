@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: companies
+#
+#  id           :integer          not null, primary key
+#  code         :string(255)
+#  name         :string(255)
+#  english_name :string(255)
+#  exchange_id  :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+
 class Company < ActiveRecord::Base
 
   validates :code, presence: true, uniqueness: true
@@ -6,4 +19,12 @@ class Company < ActiveRecord::Base
 
   belongs_to :exchange
   validates :exchange_id, presence: true
+
+  def exchange_english_name=(exchange_name)
+    self.exchange = Exchange.find_by(english_name: exchange_name)
+  end
+
+  def exchange_english_name
+    self.exchange.english_name
+  end
 end

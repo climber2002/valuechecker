@@ -28,9 +28,17 @@ gem 'annotate', ">=2.6.0",       group: :development
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
+# for excel
+gem 'roo'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'factory_girl_rails'
+end
+
+group :development do
+  gem 'guard'
+  gem 'guard-rspec', require: false
 end
 
 group :test do
