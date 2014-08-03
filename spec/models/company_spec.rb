@@ -61,4 +61,25 @@ RSpec.describe Company, :type => :model do
     end
 
   end
+
+  describe "#daily_value_on" do
+    
+    subject { FactoryGirl.create(:company) }
+
+    context "no daily value on today" do
+      it "should return nil" do
+        expect(subject.daily_value_on(Date.today)).to be_nil
+      end
+    end
+
+    context "has daily value on today" do
+
+      it "should return the daily value" do
+        today = Date.today
+        daily_value = FactoryGirl.create(:daily_value, company: subject, date: today)  
+        expect(subject.daily_value_on(today)).to eq daily_value
+      end
+      
+    end
+  end
 end

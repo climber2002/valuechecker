@@ -34,16 +34,33 @@ module Xueqiu
       }
     end
 
-    private
-
     def company_url
       "#{BASE_URL}/S/#{@company.exchange.abbreviation}#{@company.code}"
     end
 
+    def capital_structure_url
+      "#{company_url}/GBJG"
+    end
+
+    def capital_structure_json_url
+      time = DateTime.now.to_i * 1000
+      "#{BASE_URL}/stock/f10/shareschg.json?symbol=#{@company.exchange.abbreviation}#{@company.code}&page=1&size=4&_=#{time.to_s}"
+    end
+
+    private
+
     def price_from(doc)
-      doc.xpath("//div[@id='currentQuote']").first.
-        xpath(".//strong").first.attr('data-current').
-        strip.to_f
+      current_quote = doc.xpath("//div[@id='currentQuote']").first.
+        xpath(".//strong").first
+
+      if current_quote
+        current_quote.attr('data-current').
+          strip.to_f
+      else # maybe not trade today 停牌
+        yesterday = doc.xpath("//td[contains(text(),'昨收')]").first.
+                      xpath('.//span').first.text
+        yesterday.strip.to_f
+      end
     end
 
     def pe_ttm_from(doc)
@@ -58,20 +75,13 @@ module Xueqiu
       pb_value.strip.to_f
     end
 
-    def capital_structure_url
-      "#{company_url}/GBJG"
-    end
-
-    def capital_structure_json_url
-      time = DateTime.now.to_i * 1000
-      "#{BASE_URL}/stock/f10/shareschg.json?symbol=#{@company.exchange.abbreviation}#{@company.code}&page=1&size=4&_=#{time.to_s}"
-    end
-
     def total_shares(json)
+      return 0 unless json['list'] && json['list'].first && json['list'].first['totalshare']
       (json['list'].first['totalshare'].to_f * 10000).to_i
     end
 
     def circulating_shares(json)
+      return 0 unless json['list'] && json['list'].first && json['list'].first['circskamt']
       (json['list'].first['circskamt'].to_f * 10000).to_i
     end
   end

@@ -18,7 +18,17 @@ class Index < ActiveRecord::Base
   has_many :index_items
   has_many :companies, through: :index_items
 
+  has_many :index_dailies
+
   def company_by_code(company_code)
     companies.find_by(code: company_code)
+  end
+
+  def index_daily_on(date)
+    index_dailies.find_by(date: date)
+  end
+
+  def latest_index_daily
+    index_dailies.order('date desc').first
   end
 end

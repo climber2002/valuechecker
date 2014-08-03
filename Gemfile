@@ -37,6 +37,7 @@ gem 'nokogiri'
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'factory_girl_rails'
+  gem 'timecop'
 end
 
 group :development do
@@ -45,6 +46,7 @@ group :development do
 end
 
 group :test do
+  gem 'webmock'
   gem 'faker'
   gem 'capybara'
   gem 'database_cleaner'

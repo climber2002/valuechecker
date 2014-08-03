@@ -15,7 +15,7 @@
 FactoryGirl.define do
   factory :exchange do
     name            { Faker::Company.name }
-    abbreviation    { Faker::Company.name }
+    abbreviation    { Faker::Company.name.gsub(/\s/, '')[0, 2] }
     english_name    { Faker::Company.name }
   end
 end

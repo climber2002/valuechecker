@@ -1,9 +1,25 @@
+# == Schema Information
+#
+# Table name: daily_values
+#
+#  id                 :integer          not null, primary key
+#  company_id         :integer
+#  date               :date
+#  total_shares       :integer
+#  circulating_shares :integer
+#  price              :decimal(7, 3)
+#  pe_ttm             :decimal(9, 3)
+#  pb                 :decimal(9, 3)
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+
 class DailyValue < ActiveRecord::Base
 
   belongs_to :company
   validates :company_id, presence: true
 
-  validates :date, uniqueness: { scope: :company_id }
+  validates :date, presence: true, uniqueness: { scope: :company_id }
 
   validates :total_shares, presence: true
   validates :circulating_shares, presence: true

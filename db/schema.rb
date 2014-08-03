@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140803050907) do
+ActiveRecord::Schema.define(version: 20140803080301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,11 +28,11 @@ ActiveRecord::Schema.define(version: 20140803050907) do
   create_table "daily_values", force: true do |t|
     t.integer  "company_id"
     t.date     "date"
-    t.integer  "total_shares"
-    t.integer  "circulating_shares"
-    t.decimal  "price",              precision: 7, scale: 3
-    t.decimal  "pe_ttm",             precision: 9, scale: 3
-    t.decimal  "pb",                 precision: 9, scale: 3
+    t.integer  "total_shares",       limit: 8
+    t.integer  "circulating_shares", limit: 8
+    t.decimal  "price",                        precision: 7, scale: 3
+    t.decimal  "pe_ttm",                       precision: 9, scale: 3
+    t.decimal  "pb",                           precision: 9, scale: 3
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -46,6 +46,18 @@ ActiveRecord::Schema.define(version: 20140803050907) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "index_dailies", force: true do |t|
+    t.integer  "index_id"
+    t.date     "date"
+    t.decimal  "market_value", precision: 25, scale: 3
+    t.decimal  "earnings_ttm", precision: 25, scale: 3
+    t.decimal  "books",        precision: 25, scale: 3
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "index_dailies", ["index_id", "date"], name: "index_index_dailies_on_index_id_and_date", unique: true, using: :btree
 
   create_table "index_items", force: true do |t|
     t.integer  "index_id"
