@@ -1,13 +1,24 @@
 namespace :index do
   desc "Populate the company and index data for today"
   task populate_for_today: :environment do
-    Index.all.each do |index|
-      Xueqiu::CompanyDailyValuePopulatorForIndex.new(index).populate_for_today
-    end
+    tries = 3
+    begin
+      Index.all.each do |index|
+        Xueqiu::CompanyDailyValuePopulatorForIndex.new(index).populate_for_today
+      end
 
-    Index.all.each do |index|
-      IndexDailyGenerator.new(index).generate_for_today
+      Index.all.each do |index|
+        IndexDailyGenerator.new(index).generate_for_today
+      end  
+    rescue Exception => e
+      tries -= 1
+      if tries > 0
+        retry
+      else
+        Rails.logger.error("error when populate, #{e}")
+      end
     end
+    
   end
 
   desc "Print the PE and PB for all indexes"
