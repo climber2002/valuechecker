@@ -1,7 +1,7 @@
 namespace :index do
   desc "Populate the company and index data for today"
   task populate_for_today: :environment do
-    tries = 3
+    tries = 10
     begin
       Index.all.each do |index|
         Xueqiu::CompanyDailyValuePopulatorForIndex.new(index).populate_for_today
