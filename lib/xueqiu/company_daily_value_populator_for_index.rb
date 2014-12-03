@@ -13,7 +13,7 @@ module Xueqiu
         puts "Get daily value for #{company.code} #{company.name}, index: #{i}"
         daily_value = CompanyDailyValuePopulator.new(company).populate_for_today
         if daily_value
-          random = rand(10)
+          random = rand(5)
           puts "Sleep #{random} seconds to not get blocked"
           sleep(random)
         else
